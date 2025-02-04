@@ -1,13 +1,8 @@
 import os
 import private
-import google.generativeai as genai  #CODE BELOW FOR THE MOST PART WAS TAKEN FROM PROVIDED CODE FROM GOOGLE AI
-
-
+import google.generativeai as genai  # CODE BELOW FOR THE MOST PART WAS TAKEN FROM PROVIDED CODE FROM GOOGLE AI
 def main():
   genai.configure(api_key= private.API_KEY)
-
-  generated_resume = ''
-
   # Create the model
   generation_config = {
     "temperature": 1,
