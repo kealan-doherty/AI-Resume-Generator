@@ -32,13 +32,13 @@ def main():
     data = json_data.read()
 
   prompt = f"""create a sample resume for a junior software engineer and make the resume in markdown format and for the "
-            "jobs in:{data} """ # prompt to generate the LLM for the generated resume
+            "jobs in:{data}""" # prompt to generate the LLM for the generated resume
   response = chat_session.send_message(prompt) ## generates the resume
 
   print("Resume has been generated transferring resume to a text File now")
   generated_resume = response.text
 
-  with open('resume.txt', 'w') as file: # creates the txt file and writes the resume to the txt file.
+  with open('resume.txt','w') as file: # creates the txt file and writes the resume to the txt file.
     file.write(generated_resume)
 
   print("Resume has been transferred to the text file under resume.txt")
