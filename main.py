@@ -39,5 +39,5 @@ def main():
 
     print("Resume has been transferred to the text file under resume.txt")
 
-    if __name__ == "__main__":
+if __name__ == "__main__":
         main()
