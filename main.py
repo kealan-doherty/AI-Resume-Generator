@@ -3,7 +3,6 @@ import google.generativeai as genai  # CODE BELOW FOR THE MOST PART WAS TAKEN FR
 
 def main():
 
-
     genai.configure(api_key=private.API_KEY)
     # Create the model
 
@@ -40,4 +39,4 @@ def main():
     print("Resume has been transferred to the text file under resume.txt")
 
 if __name__ == "__main__":
-        main()
+    main()
