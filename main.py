@@ -15,15 +15,38 @@ def close_database(connection: sqlite3.Connection):
     connection.commit()
     connection.close()
 
-def upload_data(data:list, cursor):
+def upload_data1(data:list, cursor):
     x=0
-    sorted_data = []
+    sorted_data = {}
+    import_data = {}
     conn,cursor = open_database('jobs_db.sqlite')
     for row in data:
         sorted_data = data[x]
-        cursor.executemany('''INSERT INTO JOB_DATA (JOB_ID, JOB_TITLE, JOB_COMPANY, JOB_DESCRIPTION, JOB_IMAGE,
-             JOB_LOCATION, JOB_EMPLOYMENT, JOB_DATE_POSTED, JOB_SALARY, JOB_PROVIDER)VALUES (?, ?, ?, ?,
-              ?, ?, ?, ?, ?, ?)''', sorted_data)
+        import_data = sorted_data[0]
+        cursor.execute('''INSERT OR IGNORE INTO JOB_DATA (JOB_ID, JOB_TITLE, JOB_COMPANY, JOB_DESCRIPTION, JOB_IMAGE
+        , JOB_LOCATION, JOB_EMPLOYMENT, JOB_DATE_POSTED, JOB_SALARY) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                       [import_data['id'], import_data['title'], import_data['company'],
+                         import_data['description'], import_data['image'], import_data['location'],
+                         import_data['employmentType'], import_data['datePosted'], import_data['salaryRange']])
+        x+=1
+    conn.commit()
+    conn.close()
+
+def upload_data2(data:list, cursor):
+    x=0
+    sorted_data = {}
+    conn,cursor = open_database('jobs_db.sqlite')
+    load_JSON.set_results_db(cursor)
+    for row in data:
+        print(sorted_data['id'])
+        cursor.execute('''INSERT OR IGNORE INTO RAPID_JOB_DATA (JOB_ID, JOB_SITE, JOB_URL, JOB_TITLE, JOB_COMPANY, 
+            JOB_LOCATION, JOB_TYPE, JOB_DATE_POSTED, JOB_SALARY_INTERVAL, JOB_SALARY_MIN, JOB_SALARY_MAX, JOB_IS_REMOTE,
+            JOB_EMAILS, JOB_DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+  [sorted_data['id'],
+            sorted_data['site'], sorted_data['job_url'], sorted_data['title'], sorted_data['company'],
+            sorted_data['location'], sorted_data['job_type'],
+            sorted_data['date_posted'], sorted_data['interval'], sorted_data['min_amount'], sorted_data['max_amount'],
+            sorted_data['is_remote'], sorted_data['emails'], sorted_data['description']])
         x+=1
     conn.commit()
     conn.close()
@@ -31,9 +54,10 @@ def upload_data(data:list, cursor):
 
 def main():
     data = []
-    load_JSON.load_json_data('rapid_jobs2.json', data) # loads JSON from file
-    conn, cursor = open_database('jobs_db.sqlite') # opens database
-    upload_data(data, cursor)
+    data_2 = {}
+    load_JSON.load_json_data1('rapidResults.json', data)
+    conn, cursor = open_database('rapid_result_job_db.sqlite')
+    upload_data2(data,cursor)
     genai.configure(api_key=private.API_KEY)  # Import API key
     # Create the model
 
