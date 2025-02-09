@@ -1,47 +1,40 @@
+import load_JSON
 import private
-import google.generativeai as genai  # CODE BELOW FOR THE MOST PART WAS TAKEN FROM PROVIDED CODE FROM GOOGLE AI
+import google.generativeai as genai
 import sqlite3
-import json
 from typing import Tuple
 
 
-def open_database(filename:str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
+def open_database(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
     db_connection = sqlite3.connect(filename)
     cursor = db_connection.cursor()
     return db_connection, cursor
 
 
-def close_database(connection:sqlite3.Connection):
+def close_database(connection: sqlite3.Connection):
     connection.commit()
     connection.close()
 
-
-def read_data(filename, data):
-    with open('rapid_jobs2.json', 'r') as x:
-        data = json.load(x)
-        return data
-
-
-def set_db_table(cursor:sqlite3.Cursor):
-    table = '''CREATE TABLE JOB_DATA(
-                JOB_TITLE TEXT PRIMARY KEY,
-                JOB_COMPANY TEXT,
-                JOB_LOCATION TEXT,
-                JOB_DESCRIPTION TEXT,
-                JOB_QUALIFICATIONS TEXT,
-                JOB_SALARY INT 
-                );'''
-    cursor.execute(table)
+def upload_data(data:list, cursor):
+    x=0
+    sorted_data = []
+    conn,cursor = open_database('jobs_db.sqlite')
+    for row in data:
+        sorted_data = data[x]
+        cursor.executemany('''INSERT INTO JOB_DATA (JOB_ID, JOB_TITLE, JOB_COMPANY, JOB_DESCRIPTION, JOB_IMAGE,
+             JOB_LOCATION, JOB_EMPLOYMENT, JOB_DATE_POSTED, JOB_SALARY, JOB_PROVIDER)VALUES (?, ?, ?, ?,
+              ?, ?, ?, ?, ?, ?)''', sorted_data)
+        x+=1
+    conn.commit()
+    conn.close()
 
 
 def main():
-
-    data = {}
-    conn, cursor = open_database('jobs_db.sqlite')
-    set_db_table(cursor)
-    conn.commit()
-    conn.close()
-    genai.configure(api_key=private.API_KEY) # Import API key
+    data = []
+    load_JSON.load_json_data('rapid_jobs2.json', data) # loads JSON from file
+    conn, cursor = open_database('jobs_db.sqlite') # opens database
+    upload_data(data, cursor)
+    genai.configure(api_key=private.API_KEY)  # Import API key
     # Create the model
 
     generation_config = {
