@@ -4,7 +4,7 @@ import private
 import google.generativeai as genai
 
 
-def upload_data1(data: list, cursor): # this functions adds data from rapid_jobs2 to the database
+def upload_data1(data: list, cursor):  # this functions adds data from rapid_jobs2 to the database
     x = 0
     sorted_data = {}
     import_data = {}
@@ -21,7 +21,7 @@ def upload_data1(data: list, cursor): # this functions adds data from rapid_jobs
     conn.commit()
 
 
-def upload_data2(data: list, cursor): # this function adds the data from rapidResults.json to database
+def upload_data2(data: list, cursor):  # this function adds the data from rapidResults.json to database
     x = 0
     sorted_data = {}
     conn, cursor = sql_functions.open_database('jobs_db.sqlite')
@@ -42,12 +42,10 @@ def upload_data2(data: list, cursor): # this function adds the data from rapidRe
 
 
 def main():
-
-
-    rapid_data = [] # loads json data in, creates tables and inputs data into the tables
+    rapid_data = []  # loads json data in, creates tables and inputs data into the tables
     result_data = []
-    load_json_data('rapid_jobs2.json',rapid_data)
-    load_json_data('rapidResults.json',result_data)
+    load_json_data('rapid_jobs2.json', rapid_data)
+    load_json_data('rapidResults.json', result_data)
     conn, cursor = sql_functions.open_database('rapid_result_job_db.sqlite')
     sql_functions.set_rapid_db(cursor)
     sql_functions.set_results_db(cursor)
@@ -76,8 +74,8 @@ def main():
         ]
     )
 
-    prompt = f"""create a sample resume for a junior software engineer and make the resume in markdown format and for th
-              e ""jobs in:"""  # prompt to generate the LLM for the generated resume
+    prompt = "create a sample resume for a junior software engineer and make the resume in markdown format and for the"
+    # prompt to generate the LLM for the generated resume
     response = chat_session.send_message(prompt)  # generates the resume
 
     print("Resume has been generated transferring resume to a text File now")

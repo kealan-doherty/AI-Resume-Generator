@@ -9,13 +9,16 @@ into the database the 1 at the end of the function name is reference to  1 = rap
 """
 
 
+def test_loading_json_data_1():
+    test_data = []
+    load_json_data('rapid_jobs2.json', test_data)
+    assert test_data[0][0]['title'] == 'Staff Software Engineer, Risk'
+
+
 def test_loading_json_data_2():
     test_data = []
-    rapid_data = []
-    load_json_data('rapid_jobs2.json',rapid_data)
-    load_json_data('rapidResults.json',test_data)
+    load_json_data('rapidResults.json', test_data)
     assert test_data[0] == test_data1
-    assert rapid_data[0][0]['title'] == 'Staff Software Engineer, Risk'
 
 
 """
@@ -31,7 +34,3 @@ def test_db_table_creation():
         SELECT name FROM sqlite_master WHERE type='table' AND name ='{JOB_DATA}' AND '{RAPID_JOB_DATA}'; ''').fetchall()
     conn.close()
     assert table_list is not None
-
-
-
-
