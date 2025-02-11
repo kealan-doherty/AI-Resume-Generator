@@ -14,9 +14,9 @@ def upload_data1(data: list, cursor):  # this functions adds data from rapid_job
         import_data = sorted_data[0]
         cursor.execute('''INSERT OR IGNORE INTO JOB_DATA (JOB_ID, JOB_TITLE, JOB_COMPANY, JOB_DESCRIPTION, JOB_IMAGE
                            , JOB_LOCATION, JOB_EMPLOYMENT, JOB_DATE_POSTED, JOB_SALARY) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                 [import_data['id'], import_data['title'], import_data['company'],
-                           import_data['description'], import_data['image'], import_data['location'],
-                           import_data['employmentType'], import_data['datePosted'], import_data['salaryRange']])
+                  [import_data['id'], import_data['title'], import_data['company'],
+                            import_data['description'], import_data['image'], import_data['location'],
+                            import_data['employmentType'], import_data['datePosted'], import_data['salaryRange']])
         x += 1
     conn.commit()
 
