@@ -1,29 +1,20 @@
-import json
 import sqlite3
+from typing import Tuple
 
 
-def load_json_data1(filename,data:list):
-    with open(filename, 'r') as file:
-        for line in file:
-            try:
-                data.append(json.loads(line))
-            except json.JSONDecodeError as e:
-                print("error decoding")
-    return data
+def open_database(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]: # opens database
+    db_connection = sqlite3.connect(filename)
+    cursor = db_connection.cursor()
+    return db_connection, cursor
 
 
-def load_json_data2(filename,data_2:dict):
-    with open(filename, 'r') as file:
-        for line in file:
-            try:
-                data_2 = json.loads(line)
-            except json.JSONDecodeError as e:
-                print("error decoding")
-    return data_2
+def close_database(connection: sqlite3.Connection): #closes database
+    connection.commit()
+    connection.close()
 
 
 def set_rapid_db(cursor: sqlite3.Cursor):
-    table = '''CREATE TABLE JOB_DATA(
+    table = '''CREATE TABLE IF NOT EXISTS JOB_DATA(
                 JOB_ID TEXT PRIMARY KEY, 
                 JOB_TITLE TEXT ,
                 JOB_COMPANY TEXT,
@@ -36,8 +27,9 @@ def set_rapid_db(cursor: sqlite3.Cursor):
                 JOB_PROVIDER TEXT);'''
     cursor.execute(table)
 
+
 def set_results_db(cursor: sqlite3.Cursor):
-    table = '''CREATE TABLE RAPID_JOB_DATA(
+    table = '''CREATE TABLE IF NOT EXISTS RAPID_JOB_DATA(
               JOB_ID TEXT PRIMARY KEY, 
               JOB_SITE TEXT,
               JOB_URL TEXT,
@@ -53,5 +45,3 @@ def set_results_db(cursor: sqlite3.Cursor):
               JOB_EMAILS TEXT,
               JOB_DESCRIPTION TEXT);'''
     cursor.execute(table)
-
-
