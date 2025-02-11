@@ -28,9 +28,9 @@ def upload_data2(data: list, cursor):  # this function adds the data from rapidR
     sql_functions.set_results_db(cursor)
     for row in data:
         sorted_data = data[x]
-        cursor.execute('''INSERT OR IGNORE INTO RAPID_JOB_DATA (JOB_ID, JOB_SITE, JOB_URL, JOB_TITLE, JOB_COMPANY, 
-            JOB_LOCATION, JOB_TYPE, JOB_DATE_POSTED, JOB_SALARY_INTERVAL, JOB_SALARY_MIN, JOB_SALARY_MAX, JOB_IS_REMOTE,
-            JOB_EMAILS, JOB_DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+        cursor.execute('''INSERT OR IGNORE INTO RAPID_JOB_DATA (JOB_ID, JOB_SITE, JOB_URL, JOB_TITLE, JOB_COMPANY, J
+                        OB_LOCATION, JOB_TYPE, JOB_DATE_POSTED, JOB_SALARY_INTERVAL, JOB_SALARY_MIN, JOB_SALARY_MAX, JOB
+                        _IS_REMOTE,JOB_EMAILS, JOB_DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                        [sorted_data['id'],
                         sorted_data['site'], sorted_data['job_url'], sorted_data['title'], sorted_data['company'],
                         sorted_data['location'], sorted_data['job_type'],
