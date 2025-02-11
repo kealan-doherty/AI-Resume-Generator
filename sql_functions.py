@@ -16,8 +16,7 @@ def close_database(connection: sqlite3.Connection):  # closes database
 def set_rapid_db(cursor: sqlite3.Cursor):
     table = '''CREATE TABLE IF NOT EXISTS JOB_DATA(JOB_ID TEXT PRIMARY KEY, JOB_TITLE TEXT , JOB_COMPANY TEXT, JOB_DESCR
             IPTION TEXT, JOB_IMAGE TEXT, JOB_LOCATION TEXT, JOB_EMPLOYMENT TEXT, JOB_DATE_POSTED TEXT, JOB_SALARY INT,JO
-            B_PROVID
-            ER TEXT);'''
+            B_PROVIDER TEXT);'''
     cursor.execute(table)
 
 
