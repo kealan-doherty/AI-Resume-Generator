@@ -31,7 +31,7 @@ def set_results_db(cursor: sqlite3.Cursor):
         JOB_LOCATION TEXT,
         JOB_TYPE TEXT,
         JOB_DATE_POSTED TEXT,
-        JOB_SALARY_INTERVAL TEXT,  
+        JOB_SALARY_INTERVAL TEXT,
         JOB_SALARY_MIN INT,
         JOB_SALARY_MAX INT,
         JOB_IS_REMOTE TEXT,
