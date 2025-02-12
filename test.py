@@ -4,7 +4,6 @@ import sqlite3
 import pytest
 
 
-
 """
 these two tests ensures the data from the json files is loaded in correctly into the program before the being entered
 into the database the 1 at the end of the function name is reference to  1 = rapidResults.json
