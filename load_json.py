@@ -3,7 +3,7 @@ import json
 
 def load_json_data(filename, data: list):
     rapid_data = []
-    with open(filename, 'r') as file:
+    with open(filename, "r") as file:
         for line in file:
             try:
                 data.append(json.loads(line))
