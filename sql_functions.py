@@ -2,7 +2,7 @@ import sqlite3
 from typing import Tuple
 
 
-def open_database(filename: str,) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:  # opens database
+def open_database(filename: str, ) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:  # opens database
     db_connection = sqlite3.connect(filename)
     cursor = db_connection.cursor()
     return db_connection, cursor
@@ -42,7 +42,9 @@ def set_results_db(cursor: sqlite3.Cursor):
     cursor.execute(table)
 
     #  this function will pull jobs based on the job title provided buy the user from 1st database
-def pull_data_rapid2(input_text:str, pulled_jobs:list):
+
+
+def pull_data_rapid2(input_text: str, pulled_jobs: list):
     conn = sqlite3.connect('jobs_db.sqlite')
     cursor = conn.cursor()
     cursor.execute("""SELECT JOB_ID, JOB_TITLE, JOB_COMPANY, JOB_LOCATION FROM JOB_DATA WHERE JOB_TITLE LIKE ?""",
@@ -59,10 +61,11 @@ def pull_data_rapid2(input_text:str, pulled_jobs:list):
 
     return pulled_jobs
 
-def pull_single_listing(input_text2:str, job_listing:list):
+
+def pull_single_listing(input_text2: str, job_listing: list):
     conn = sqlite3.connect('jobs_db.sqlite')
     cursor = conn.cursor()
-    cursor.execute("""SELECT *  FROM JOB_DATA WHERE JOB_ID = ? """,(input_text2, ))
+    cursor.execute("""SELECT *  FROM JOB_DATA WHERE JOB_ID = ? """, (input_text2,))
     rows = cursor.fetchall()
     for row in rows:
         job_listing.append(row)
@@ -89,7 +92,7 @@ def create_user_db():
     conn.close()
 
 
-def load_user_db(contact_info:str, project_info:str, classes_info:str, other_info:str):
+def load_user_db(contact_info: str, project_info: str, classes_info: str, other_info: str):
     conn = sqlite3.connect('jobs_db.sqlite')
     cursor = conn.cursor()
     cursor.execute("""INSERT INTO USER_DATA(CONTACT_INFO, PROJECT, CLASSES, OTHER) VALUES (?, ?, ?, ?)""",

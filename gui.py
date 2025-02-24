@@ -57,7 +57,7 @@ class SecondWindow(QMainWindow):
         self.list_widget = QListWidget()
 
         for job in pulled_jobs:
-                self.list_widget.addItem(str(job))
+            self.list_widget.addItem(str(job))
 
         layout = QVBoxLayout()
         layout.addWidget(self.list_widget)

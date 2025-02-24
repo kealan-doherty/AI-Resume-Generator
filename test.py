@@ -3,7 +3,6 @@ from json_string_for_verification import test_data1
 from load_json import load_json_data
 import sqlite3
 
-
 """
 these two tests ensures the data from the json files is loaded in correctly into the program before the being entered
 into the database the 1 at the end of the function name is reference to  1 = rapidResults.json
@@ -40,7 +39,7 @@ def test_db_table_creation():
 
 
 def test_pull_single_listing():
-    job_listing =[]
+    job_listing = []
     conn = sqlite3.connect("jobs_db.sqlite")
     cursor = conn.cursor()
     user_input = 'f97b4a007d08a432'
@@ -51,7 +50,6 @@ def test_pull_single_listing():
     rows = cursor.fetchall()
     assert job_listing == rows
     conn.close()
-
 
 
 def test_user_saved_data():
