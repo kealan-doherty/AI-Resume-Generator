@@ -128,7 +128,7 @@ class ThirdWindow(QMainWindow):
 
 def run():
     app = QApplication(sys.argv)
-    ex = MainWindow()  #  noqa: F841
+    ex = MainWindow()
     sys.exit(app.exec())
 
 
