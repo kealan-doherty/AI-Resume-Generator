@@ -1,4 +1,3 @@
-#  flake8: noqa
 import sys
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, \
     QLineEdit, QListWidget, QMainWindow
@@ -128,7 +127,7 @@ class ThirdWindow(QMainWindow):
 
 def run():
     app = QApplication(sys.argv)
-    ex = MainWindow()
+    ex = MainWindow() # noqa
     sys.exit(app.exec())
 
 
