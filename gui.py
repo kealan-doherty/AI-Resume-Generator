@@ -1,3 +1,4 @@
+#  flake8: noqa
 import sys
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, \
     QLineEdit, QListWidget, QMainWindow
