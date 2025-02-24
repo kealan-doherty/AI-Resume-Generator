@@ -2,6 +2,7 @@ import sql_functions
 from load_json import load_json_data
 import private
 import google.generativeai as genai
+import gui
 
 
 def upload_data1(
@@ -68,18 +69,6 @@ def upload_data2(
 
 
 def main():
-    rapid_data = (
-        []
-    )  # loads json data in, creates tables and inputs data into the tables
-    result_data = []
-    load_json_data("rapid_jobs2.json", rapid_data)
-    load_json_data("rapidResults.json", result_data)
-    conn, cursor = sql_functions.open_database("rapid_result_job_db.sqlite")
-    sql_functions.set_rapid_db(cursor)
-    sql_functions.set_results_db(cursor)
-    upload_data1(rapid_data, cursor)
-    upload_data2(result_data, cursor)
-    conn.close()
     genai.configure(api_key=private.API_KEY)  # Import API key
 
     # Create the model and code for model creation was taken directly from google studio
