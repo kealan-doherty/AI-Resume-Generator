@@ -1,8 +1,6 @@
 import sql_functions
-from load_json import load_json_data
 import private
 import google.generativeai as genai
-import gui
 
 
 def upload_data1(
@@ -46,7 +44,7 @@ def upload_data2(
         cursor.execute(
             """INSERT OR IGNORE INTO RAPID_JOB_DATA (JOB_ID, JOB_SITE, JOB_URL, JOB_TITLE, JOB_COMPANY, 
         JOB_LOCATION, JOB_TYPE, JOB_DATE_POSTED, JOB_SALARY_INTERVAL, JOB_SALARY_MIN, JOB_SALARY_MAX, JOB_IS_REMOTE,JOB_EMAILS,
-                         JOB_DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        JOB_DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             [
                 sorted_data["id"],
                 sorted_data["site"],

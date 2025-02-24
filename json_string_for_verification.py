@@ -106,5 +106,3 @@ test_data1 = {
     "ceo_name": "",
     "ceo_photo_url": "",
 }
-
-
