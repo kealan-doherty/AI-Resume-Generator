@@ -1,4 +1,3 @@
-import gui
 import sql_functions
 from json_string_for_verification import test_data1
 from load_json import load_json_data
