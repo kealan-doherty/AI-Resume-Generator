@@ -2,6 +2,7 @@ import sql_functions
 from json_string_for_verification import test_data1
 from load_json import load_json_data
 import sqlite3
+from user_data_for_verification import user_data_verification
 
 """
 these two tests ensures the data from the json files is loaded in correctly into the program before the being entered
@@ -57,4 +58,16 @@ def test_user_saved_data():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM USER_DATA WHERE CONTACT_INFO = 'kealan';")
     rows = cursor.fetchall()
-    assert rows == [('kealan', 'doherty', 'class', 'other')]
+    assert rows == [('test', 'kealan', 'doherty', 'class', 'other')]
+
+
+def test_user_data_in_Ai():
+    rows = {}
+    sql_functions.pull_user('kealan-doherty', rows)
+    assert rows == user_data_verification
+
+
+def test_markdown_file():
+    with open('resume.md', 'r', encoding ='utf-8') as f:
+        text = f.read()
+        assert text != None

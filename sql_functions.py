@@ -82,7 +82,8 @@ def create_user_db():
     conn = sqlite3.connect('jobs_db.sqlite')
     cursor = conn.cursor()
     cursor.execute("""CREATE TABLE IF NOT EXISTS USER_DATA (
-         CONTACT_INFO TEXT PRIMARY KEY,
+         USERNAME TEXT PRIMARY KEY,
+         CONTACT_INFO TEXT,
          PROJECT TEXT,
          CLASSES TEXT,
          OTHER TEXT
@@ -92,10 +93,86 @@ def create_user_db():
     conn.close()
 
 
-def load_user_db(contact_info: str, project_info: str, classes_info: str, other_info: str):
+def load_user_db(username:str, contact_info: str, project_info: str, classes_info: str, other_info: str):
     conn = sqlite3.connect('jobs_db.sqlite')
     cursor = conn.cursor()
-    cursor.execute("""INSERT INTO USER_DATA(CONTACT_INFO, PROJECT, CLASSES, OTHER) VALUES (?, ?, ?, ?)""",
-                   [contact_info, project_info, classes_info, other_info])
+    cursor.execute("""INSERT INTO USER_DATA(USERNAME, CONTACT_INFO, PROJECT, CLASSES, OTHER) VALUES (?, ?, ?, ?, ?)""",
+                   [username, contact_info, project_info, classes_info, other_info])
+    conn.commit()
+    conn.close()
+
+
+def pull_user(username: str, user_data:dict):
+    conn = sqlite3.connect('jobs_db.sqlite')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute("""SELECT *  FROM USER_DATA WHERE USERNAME = ? """, (username,))
+    rows = cursor.fetchone()
+    if rows:
+        user_data.update(rows)
+    return user_data
+
+
+def upload_data1(
+    data: list, cursor
+):  # this functions adds data from rapid_jobs2 to the database
+    x = 0
+    sorted_data = {}
+    import_data = {}
+    conn, cursor = open_database("jobs_db.sqlite")
+    for row in data:
+        sorted_data = data[x]
+        import_data = sorted_data[0]
+        cursor.execute(
+            """INSERT OR IGNORE INTO JOB_DATA (JOB_ID, JOB_TITLE, JOB_COMPANY, JOB_DESCRIPTION, JOB_IMAGE
+                           , JOB_LOCATION, JOB_EMPLOYMENT, JOB_DATE_POSTED, JOB_SALARY) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            [
+                import_data["id"],
+                import_data["title"],
+                import_data["company"],
+                import_data["description"],
+                import_data["image"],
+                import_data["location"],
+                import_data["employmentType"],
+                import_data["datePosted"],
+                import_data["salaryRange"],
+            ],
+        )
+        x += 1
+    conn.commit()
+    conn.close()
+
+
+def upload_data2(
+    data: list, cursor
+):  # this function adds the data from rapidResults.json to database
+    x = 0
+    sorted_data = {}
+    conn, cursor = open_database("jobs_db.sqlite")
+    set_results_db(cursor)
+    for row in data:
+        sorted_data = data[x]
+        cursor.execute(
+            """INSERT OR IGNORE INTO RAPID_JOB_DATA (JOB_ID, JOB_SITE, JOB_URL, JOB_TITLE, JOB_COMPANY, JOB_LOCATION
+            , JOB_TYPE, JOB_DATE_POSTED, JOB_SALARY_INTERVAL, JOB_SALARY_MIN, JOB_SALARY_MAX, JOB_IS_REMOTE
+            ,JOB_EMAILS,JOB_DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            [
+                sorted_data["id"],
+                sorted_data["site"],
+                sorted_data["job_url"],
+                sorted_data["title"],
+                sorted_data["company"],
+                sorted_data["location"],
+                sorted_data["job_type"],
+                sorted_data["date_posted"],
+                sorted_data["interval"],
+                sorted_data["min_amount"],
+                sorted_data["max_amount"],
+                sorted_data["is_remote"],
+                sorted_data["emails"],
+                sorted_data["description"],
+            ],
+        )
+        x += 1
     conn.commit()
     conn.close()
