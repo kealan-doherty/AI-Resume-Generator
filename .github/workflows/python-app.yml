@@ -29,8 +29,7 @@ jobs:
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Bulid Secrets
-      env:
-        API_KEY:${{secrets.LLM_API_KEY}}
+       API_KEY:${{secrets.LLM_API_KEY}}
       run: |
             echo 'gemini_api_key = "'$API_KEY'"' >> api_secrets.py
     - name: Lint with flake8
