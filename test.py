@@ -71,7 +71,7 @@ def test_user_saved_data():
     assert rows == [('test', 'kealan', 'doherty', 'class', 'other')]
 
 
-## this test checks if use data is loaded correctly for LLM prompt
+# this test checks if use data is loaded correctly for LLM prompt
 
 
 def test_user_data_in_Ai():
