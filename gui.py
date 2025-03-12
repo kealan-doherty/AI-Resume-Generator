@@ -12,8 +12,7 @@ pulled_jobs = []
 """
 this code runs the GUI for the project providing a UI for the user to interact in order to find a job, input their perso
 nal info and save it to a profile with a user name, which is sent ti the LLM model to generate the resume and cover lett
-er. 
-"""
+er. """
 
 
 class MainWindow(QMainWindow):
@@ -131,8 +130,8 @@ class ThirdWindow(QMainWindow):
         self.input_others = QLineEdit(self)
         self.input_username = QLineEdit(self)
         self.profile_search = QLineEdit(self)
-        self.intro_message = QLabel("here you can either input your info for the resume generator or access a profile"
-                                    , self)
+        self.intro_message = QLabel("here you can either input your info for the resume generator or access a profile",
+                                    self)
         self.profile_search.setPlaceholderText("already have an account, please enter username here")
         self.input_username.setPlaceholderText("PLease enter a username for accessing profile")
         self.input_contact_info.setPlaceholderText("Please enter your contact info here")

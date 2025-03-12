@@ -60,8 +60,7 @@ def test_pull_single_listing():
 
 
 """
-this test ensures that user data was enters correctly into the database by checking the values of a test user 
-"""
+this test ensures that user data was enters correctly into the database by checking the values of a test user """
 
 
 def test_user_saved_data():
@@ -70,10 +69,13 @@ def test_user_saved_data():
     cursor.execute("SELECT * FROM USER_DATA WHERE CONTACT_INFO = 'kealan';")
     rows = cursor.fetchall()
     assert rows == [('test', 'kealan', 'doherty', 'class', 'other')]
+
+
 """
 this test ensures that the user info is correctly pulled from the database before being put into the LLM for resume 
 and cover letter generation
 """
+
 
 def test_user_data_in_Ai():
     rows = {}

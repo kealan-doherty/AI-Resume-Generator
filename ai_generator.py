@@ -5,8 +5,8 @@ from markdown_pdf import MarkdownPdf, Section
 
 
 """
-this file contains the code that prompts the LLM for the cover letter and resume and generates the markdown file which 
-is then converted into a pdf
+this file contains the code that prompts the LLM for the cover letter and resume and generates the markdown file whichis
+then converted into a pdf
 """
 
 
