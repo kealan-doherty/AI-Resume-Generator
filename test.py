@@ -71,10 +71,7 @@ def test_user_saved_data():
     assert rows == [('test', 'kealan', 'doherty', 'class', 'other')]
 
 
-"""
-ensures that the user info is correctly pulled from the database before being put into the LLM for resume and cover 
-letter generation
-"""
+## this test checks if use data is loaded correctly for LLM prompt
 
 
 def test_user_data_in_Ai():
