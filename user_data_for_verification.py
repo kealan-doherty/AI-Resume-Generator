@@ -5,7 +5,8 @@ is given the user data for generating the resume
 
 user_data_verification = {'USERNAME': 'kealan-doherty',
                           'CONTACT_INFO': ' kealan doherty,'
-                                          ' phone number: 617-347-7867, GitHub: kealan-doherty,\n email: kealandoherty18@icloud.com,'
+                                          ' phone number: 617-347-7867, GitHub: kealan-doherty,\n email: kealandoherty18'
+                                          '@icloud.com,'
                                           ' location: Braintree Ma, linkedin:\n  https://kealan-doherty.github.io/\n\n',
                           'PROJECT':
                               "Ai resume generator: creates resume based off a job\n selected by the user from a database"

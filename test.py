@@ -72,8 +72,8 @@ def test_user_saved_data():
 
 
 """
-this test ensures that the user info is correctly pulled from the database before being put into the LLM for resume 
-and cover letter generation
+this test ensures that the user info is correctly pulled from the database before being put into the LLM for resume and 
+cover letter generation
 """
 
 
@@ -85,6 +85,8 @@ def test_user_data_in_Ai():
 """
 this test ensures that the markdown files are written with the response from the LLM before being converted to pdf
 """
+
+
 def test_markdown_file():
     assert os.path.getsize('resume.md') > 0
     assert os.path.getsize('cover_letter.md') > 0
