@@ -10,9 +10,9 @@ input_text2 = ''
 pulled_jobs = []
 
 """
-this code runs the GUI for the project providing a UI for the user to interact in order to find a job, input their 
-personal info and save it to a profile with a user name, which is sent ti the LLM model to generate the resume and cover
-letter. 
+this code runs the GUI for the project providing a UI for the user to interact in order to find a job, input their perso
+nal info and save it to a profile with a user name, which is sent ti the LLM model to generate the resume and cover lett
+er. 
 """
 
 

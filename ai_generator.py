@@ -3,10 +3,13 @@ import private
 import google.generativeai as genai
 from markdown_pdf import MarkdownPdf, Section
 
+
 """
 this file contains the code that prompts the LLM for the cover letter and resume and generates the markdown file which 
 is then converted into a pdf
 """
+
+
 def create_reumse(user_input: dict):
     resume = ''
     genai.configure(api_key=private.LLM_API_KEY)  # Import API key

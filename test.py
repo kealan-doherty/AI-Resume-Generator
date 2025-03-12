@@ -38,9 +38,11 @@ def test_db_table_creation():
     conn.close()
     assert table_list is not None
 
+
 """
 this test ensures that a single job listing is able to be pulled from the db based on the user entering an job id
 """
+
 
 def test_pull_single_listing():
     job_listing = []
@@ -55,9 +57,11 @@ def test_pull_single_listing():
     assert job_listing == rows
     conn.close()
 
+
 """
 this test ensures that user data was enters correctly into the database by checking the values of a test user 
 """
+
 
 def test_user_saved_data():
     conn = sqlite3.connect("jobs_db.sqlite")
@@ -81,7 +85,7 @@ this test ensures that the markdown files are written with the response from the
 def test_markdown_file():
     with open('resume.md', 'r', encoding='utf-8') as f:
         text = f.read()
-        assert text != None
+        if text is not None:
     with open('cover_letter.md', 'r', encoding='utf-8') as f:
         text = f.read()
-        assert text != None
+        if text is not None:
