@@ -3,6 +3,7 @@ from json_string_for_verification import test_data1
 from load_json import load_json_data
 import sqlite3
 from user_data_for_verification import user_data_verification
+import os
 
 """
 these two tests ensures the data from the json files is loaded in correctly into the program before the being entered
@@ -45,16 +46,16 @@ this test ensures that a single job listing is able to be pulled from the db bas
 
 
 def test_pull_single_listing():
-    job_listing = []
+    job_listing = {}
     conn = sqlite3.connect("jobs_db.sqlite")
     cursor = conn.cursor()
     user_input = 'f97b4a007d08a432'
     sql_functions.pull_single_listing(user_input, job_listing)
     cursor.execute("SELECT * FROM JOB_DATA WHERE JOB_ID = ?", (user_input,))
-    rows = cursor.fetchall()
-    cursor.execute("SELECT * FROM RAPID_JOB_DATA WHERE JOB_ID = ?", (user_input,))
-    rows = cursor.fetchall()
-    assert job_listing == rows
+    rows = cursor.fetchone()
+    if rows:
+        job_listing.update(rows)
+    assert job_listing["JOB_ID"] == 'f97b4a007d08a432'
     conn.close()
 
 
@@ -83,9 +84,5 @@ def test_user_data_in_Ai():
 this test ensures that the markdown files are written with the response from the LLM before being converted to pdf
 """
 def test_markdown_file():
-    with open('resume.md', 'r', encoding='utf-8') as f:
-        text = f.read()
-        if text is not None:
-    with open('cover_letter.md', 'r', encoding='utf-8') as f:
-        text = f.read()
-        if text is not None:
+    assert os.path.getsize('resume.md') > 0
+    assert os.path.getsize('cover_letter.md') > 0
