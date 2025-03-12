@@ -72,8 +72,8 @@ def test_user_saved_data():
 
 
 """
-this test ensures that the user info is correctly pulled from the database before being put into the LLM for resume and 
-cover letter generation
+ensures that the user info is correctly pulled from the database before being put into the LLM for resume and cover 
+letter generation
 """
 
 
@@ -81,6 +81,7 @@ def test_user_data_in_Ai():
     rows = {}
     sql_functions.pull_user('kealan-doherty', rows)
     assert rows == user_data_verification
+
 
 """
 this test ensures that the markdown files are written with the response from the LLM before being converted to pdf
