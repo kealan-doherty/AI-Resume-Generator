@@ -1,6 +1,11 @@
 import sqlite3
 from typing import Tuple
 
+"""
+this code has the functions used for the database created for this project from opening,closing,creating tables, loading
+data into the tables, and pulling data from the database
+"""
+
 
 def open_database(filename: str, ) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:  # opens database
     db_connection = sqlite3.connect(filename)
@@ -62,19 +67,21 @@ def pull_data_rapid2(input_text: str, pulled_jobs: list):
     return pulled_jobs
 
 
-def pull_single_listing(input_text2: str, job_listing: list):
+def pull_single_listing(input_text2: str, job_listing: dict):
     conn = sqlite3.connect('jobs_db.sqlite')
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute("""SELECT *  FROM JOB_DATA WHERE JOB_ID = ? """, (input_text2,))
-    rows = cursor.fetchall()
-    for row in rows:
-        job_listing.append(row)
+    rows = cursor.fetchone()
+    if rows:
+        job_listing.update(rows)
 
     cursor.execute("""SELECT *  FROM RAPID_JOB_DATA WHERE JOB_ID = ? """, (input_text2,))
-    rows = cursor.fetchall()
-    for row in rows:
-        job_listing.append(row)
+    rows2 = cursor.fetchone()
+    if rows2:
+        job_listing.update(rows2)
 
+    print(job_listing)
     return job_listing
 
 
@@ -93,7 +100,7 @@ def create_user_db():
     conn.close()
 
 
-def load_user_db(username:str, contact_info: str, project_info: str, classes_info: str, other_info: str):
+def load_user_db(username: str, contact_info: str, project_info: str, classes_info: str, other_info: str):
     conn = sqlite3.connect('jobs_db.sqlite')
     cursor = conn.cursor()
     cursor.execute("""INSERT INTO USER_DATA(USERNAME, CONTACT_INFO, PROJECT, CLASSES, OTHER) VALUES (?, ?, ?, ?, ?)""",
@@ -102,7 +109,7 @@ def load_user_db(username:str, contact_info: str, project_info: str, classes_inf
     conn.close()
 
 
-def pull_user(username: str, user_data:dict):
+def pull_user(username: str, user_data: dict):
     conn = sqlite3.connect('jobs_db.sqlite')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -114,7 +121,7 @@ def pull_user(username: str, user_data:dict):
 
 
 def upload_data1(
-    data: list, cursor
+        data: list, cursor
 ):  # this functions adds data from rapid_jobs2 to the database
     x = 0
     sorted_data = {}
@@ -144,7 +151,7 @@ def upload_data1(
 
 
 def upload_data2(
-    data: list, cursor
+        data: list, cursor
 ):  # this function adds the data from rapidResults.json to database
     x = 0
     sorted_data = {}

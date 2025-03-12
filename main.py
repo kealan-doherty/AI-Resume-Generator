@@ -1,9 +1,10 @@
 from PySide6.QtWidgets import QMainWindow
 import sys
-import gui
-from gui import MainWindow, SecondWindow, ThirdWindow, finalWindow
+from gui import MainWindow
 import PySide6
-
+"""
+main runs the GUI for the program where the rest of the program is handled
+"""
 def main():
     gui = PySide6.QtWidgets.QApplication(sys.argv)
     window = MainWindow()

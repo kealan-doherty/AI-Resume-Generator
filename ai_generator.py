@@ -3,9 +3,13 @@ import private
 import google.generativeai as genai
 from markdown_pdf import MarkdownPdf, Section
 
-def create_reumse(user_input:dict,):
-    resume =''
-    genai.configure(api_key=private.API_KEY)  # Import API key
+"""
+this file contains the code that prompts the LLM for the cover letter and resume and generates the markdown file which 
+is then converted into a pdf
+"""
+def create_reumse(user_input: dict):
+    resume = ''
+    genai.configure(api_key=private.LLM_API_KEY)  # Import API key
 
     generation_config = {
         "temperature": 1,
@@ -24,7 +28,21 @@ def create_reumse(user_input:dict,):
 
     converted_input = str(user_input)
     converted_job = str(gui.job_listing)
-    prompt = (f"create a resume in markdown format based on the info provided here:{converted_input,converted_job}"
+    prompt = (f"create a cover letter in markdown format based on the info provided here:"
+              f"{converted_job, converted_input}\n with no markings or suggestions so it is a clean cover letter")
+    response = chat_session.send_message(prompt)
+    cover_letter = response.text
+    with open("cover_letter.md", "w", encoding="utf-8") as f:
+        f.write(cover_letter)
+
+    with open("cover_letter.md", "r", encoding="utf-8") as f:
+        cover_letter = f.read()
+        pdf = MarkdownPdf()
+        pdf.add_section(Section(text=cover_letter))
+        pdf.meta["title"] = "cover_letter.pdf"
+        pdf.save("cover_letter.pdf")
+    prompt = None
+    prompt = (f"create a resume in markdown format based on the info provided here:{converted_input, converted_job}"
               f"with no markings and suggestions within the resume so it is a clean resume")
     # prompt to generate the LLM for the generated resume
     response = chat_session.send_message(prompt)  # generates the resume
@@ -37,6 +55,4 @@ def create_reumse(user_input:dict,):
         pdf = MarkdownPdf()
         pdf.add_section(Section(text=text))
         pdf.meta["title"] = "resume.pdf"
-        pdf.save("resume.pdf",)
-
-
+        pdf.save("resume.pdf", )

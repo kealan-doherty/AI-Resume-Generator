@@ -38,6 +38,9 @@ def test_db_table_creation():
     conn.close()
     assert table_list is not None
 
+"""
+this test ensures that a single job listing is able to be pulled from the db based on the user entering an job id
+"""
 
 def test_pull_single_listing():
     job_listing = []
@@ -52,6 +55,9 @@ def test_pull_single_listing():
     assert job_listing == rows
     conn.close()
 
+"""
+this test ensures that user data was enters correctly into the database by checking the values of a test user 
+"""
 
 def test_user_saved_data():
     conn = sqlite3.connect("jobs_db.sqlite")
@@ -59,15 +65,23 @@ def test_user_saved_data():
     cursor.execute("SELECT * FROM USER_DATA WHERE CONTACT_INFO = 'kealan';")
     rows = cursor.fetchall()
     assert rows == [('test', 'kealan', 'doherty', 'class', 'other')]
-
+"""
+this test ensures that the user info is correctly pulled from the database before being put into the LLM for resume 
+and cover letter generation
+"""
 
 def test_user_data_in_Ai():
     rows = {}
     sql_functions.pull_user('kealan-doherty', rows)
     assert rows == user_data_verification
 
-
+"""
+this test ensures that the markdown files are written with the response from the LLM before being converted to pdf
+"""
 def test_markdown_file():
-    with open('resume.md', 'r', encoding ='utf-8') as f:
+    with open('resume.md', 'r', encoding='utf-8') as f:
+        text = f.read()
+        assert text != None
+    with open('cover_letter.md', 'r', encoding='utf-8') as f:
         text = f.read()
         assert text != None

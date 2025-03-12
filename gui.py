@@ -4,10 +4,16 @@ from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, Q
 import sql_functions
 import ai_generator
 
-job_listing = []
+job_listing = {}
 input_text = ''
 input_text2 = ''
 pulled_jobs = []
+
+"""
+this code runs the GUI for the project providing a UI for the user to interact in order to find a job, input their 
+personal info and save it to a profile with a user name, which is sent ti the LLM model to generate the resume and cover
+letter. 
+"""
 
 
 class MainWindow(QMainWindow):
@@ -97,7 +103,6 @@ class ThirdWindow(QMainWindow):
         sql_functions.pull_user(username, user_data)
         ai_generator.create_reumse(user_data)
 
-
     def on_button2_clicked(self):
         user_data = {}
         username = self.profile_search.text()
@@ -109,8 +114,11 @@ class ThirdWindow(QMainWindow):
         self.resize(1000, 1000)
         self.list_widget = QListWidget()
 
-        for job in job_listing:
-            self.list_widget.addItem(str(job))
+        self.list_widget.addItem(job_listing["JOB_SITE"])
+        self.list_widget.addItem(job_listing["JOB_URL"])
+        self.list_widget.addItem(job_listing["JOB_TITLE"])
+        self.list_widget.addItem(job_listing["JOB_LOCATION"])
+        self.list_widget.addItem(job_listing["JOB_TYPE"])
 
         layout = QVBoxLayout()
         layout.addWidget(self.list_widget)
@@ -132,7 +140,7 @@ class ThirdWindow(QMainWindow):
         self.input_classes.setPlaceholderText("Please enter your classes here")
         self.input_others.setPlaceholderText("Please enter any other important info here")
         self.intro_message.setGeometry(350, 250, 500, 250)
-        self.profile_search.setGeometry(100,575,275,50)
+        self.profile_search.setGeometry(100, 575, 275, 50)
         self.input_username.setGeometry(500, 575, 275, 50)
         self.input_contact_info.setGeometry(500, 650, 275, 50)
         self.input_projects.setGeometry(500, 725, 275, 50)
@@ -149,7 +157,6 @@ class ThirdWindow(QMainWindow):
 
         self.show()
 
-
     def open_final_window(self):
         self.final_window = finalWindow()
         self.final_window.show()
@@ -163,7 +170,7 @@ class finalWindow(QMainWindow):
 
     def setup(self):
         self.setWindowTitle("AI resume generator")
-        self.resize(1000,1000 )
+        self.resize(1000, 1000)
         self.final_message = QLabel("resume has been generated into a PDF file and saved to your machine ", self)
         self.final_message.setGeometry(250, 100, 400, 50)
         self.show()
@@ -171,7 +178,7 @@ class finalWindow(QMainWindow):
 
 def run():
     app = QApplication(sys.argv)
-    ex = MainWindow() # noqa
+    ex = MainWindow()  # noqa
     sys.exit(app.exec())
 
 
